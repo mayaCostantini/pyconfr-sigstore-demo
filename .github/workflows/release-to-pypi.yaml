@@ -1,0 +1,44 @@
+name: Sign package and release it to PyPI
+
+on:
+  release:
+    types:
+      - published
+
+# permissions:  # added using https://github.com/step-security/secure-workflows
+#   contents: read
+
+# permissions:
+#   # Used to sign the release's artifacts with sigstore-python.
+#   id-token: write
+
+#   # Used to attach signing artifacts to the published release.
+#   contents: write
+
+jobs:
+  sign-and-release:
+    permissions:
+        id-token: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Compute checksums file for all files in the project
+        run: | 
+          find -type f -exec sha256sum "{}" + >| checksums.txt
+
+      - name: Sign project with sigstore-python
+        uses: sigstore/gh-action-sigstore-python@v1.1.0
+        id: sigstore-python
+        with:
+          inputs: checksums.txt
+
+      - name: Add and commit checksums file and Sigstore verification materials
+        uses: EndBug/add-and-commit@v9.1.1
+        with:
+          add: ['checksums.txt', 'checksums.txt.sig', 'checksums.txt.crt', 'checksums.txt.bundle']
+          author_name: Maya Costantini
+          author_email: mcostant@redhat.com
+          message: 'Update checksums.txt manifest'
+          push: true
+      
