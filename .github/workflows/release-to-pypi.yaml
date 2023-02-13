@@ -39,6 +39,7 @@ jobs:
           author_name: Maya Costantini
           author_email: mcostant@redhat.com
           message: 'Update checksums.txt manifest'
+          new_branch: 'sign-and-upload'
           push: true
       
       - name: Install pypa/build
