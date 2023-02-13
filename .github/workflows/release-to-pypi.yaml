@@ -19,23 +19,38 @@ jobs:
         with:
           python-version: '3.10'
           architecture: 'x64'
+          cache: "pip"
         env:
           AGENT_TOOLSDIRECTORY: /opt/hostedtoolcache
 
-      - name: Compute checksums file for all files in the project
+      - name: Remove old checksums and Sigstore verification materials files
+        uses: EndBug/add-and-commit@v9.1.1
+        with:
+          remove: '--ignore-unmatch checksums-*'
+          author_name: Maya Costantini
+          author_email: mcostant@redhat.com
+          message: 'Remove old checksums and verification materials files'
+          push: 'origin HEAD:master'
+
+      - name: Get current date timestamp
+        id: date
         run: | 
-          find -type f -exec sha256sum "{}" + >| checksums.txt
+          echo "::set-output name=date::$(date +%s)"
+
+      - name: Compute checksums file for all files in the project
+        run: |
+          find -type f -exec sha256sum "{}" + >| checksums-${{ steps.date.outputs.date }}.txt
 
       - name: Sign project with sigstore-python
         uses: sigstore/gh-action-sigstore-python@v1.1.0
         id: sigstore-python
         with:
-          inputs: checksums.txt
+          inputs: checksums-${{ steps.date.outputs.date }}.txt
 
       - name: Add and commit checksums file and Sigstore verification materials
         uses: EndBug/add-and-commit@v9.1.1
         with:
-          add: "['checksums.txt', 'checksums.txt.sig', 'checksums.txt.crt', 'checksums.txt.sigstore']"
+          add: "['checksums-${{ steps.date.outputs.date }}.txt', 'checksums-${{ steps.date.outputs.date }}.txt.sig', 'checksums-${{ steps.date.outputs.date }}.txt.crt', 'checksums-${{ steps.date.outputs.date }}.txt.sigstore']"
           author_name: Maya Costantini
           author_email: mcostant@redhat.com
           message: 'Update and sign checksums.txt manifest'
