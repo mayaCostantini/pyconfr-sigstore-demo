@@ -39,7 +39,7 @@ jobs:
           author_name: Maya Costantini
           author_email: mcostant@redhat.com
           message: 'Update checksums.txt manifest'
-          pull: '--rebase'
+          pull: '--autostash'
           new_branch: 'sign-and-upload'
           push: true
       
