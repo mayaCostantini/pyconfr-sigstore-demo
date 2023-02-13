@@ -1,8 +1,8 @@
 [project]
-name = "TODO"
-description = "TODO"
-readme = "README.rst"
-requires-python = ">=3.8"
+name = "pyconfrdemo"
+description = "Demo package for PyConFR 2023 demo"
+readme = "README.md"
+requires-python = ">=3.10"
 license = {file = "LICENSE"}
 
 [build-system]
@@ -10,7 +10,7 @@ requires = ["setuptools", "wheel"]
 
 [tool.black]
 line-length = 120
-target-version = ['py38']
+target-version = ['py310']
 include = '\.pyi?$'
 exclude = '''
 /(
