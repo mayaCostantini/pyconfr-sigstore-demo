@@ -35,7 +35,7 @@ jobs:
       - name: Add and commit checksums file and Sigstore verification materials
         uses: EndBug/add-and-commit@v9.1.1
         with:
-          add: "['checksums.txt', 'checksums.txt.sig', 'checksums.txt.crt', 'checksums.txt.bundle']"
+          add: "['checksums.txt', 'checksums.txt.sig', 'checksums.txt.crt', 'checksums.txt.sigstore']"
           author_name: Maya Costantini
           author_email: mcostant@redhat.com
           message: 'Update checksums.txt manifest'
