@@ -1,1 +1,1 @@
-"""Thoth-station."""
+"""PyConFR-demo."""
