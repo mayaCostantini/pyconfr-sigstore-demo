@@ -38,10 +38,8 @@ jobs:
           add: "['checksums.txt', 'checksums.txt.sig', 'checksums.txt.crt', 'checksums.txt.sigstore']"
           author_name: Maya Costantini
           author_email: mcostant@redhat.com
-          message: 'Update checksums.txt manifest'
-          pull: '--autostash'
-          new_branch: 'sign-and-upload'
-          push: true
+          message: 'Update and sign checksums.txt manifest'
+          push: 'origin HEAD:master'
       
       - name: Install pypa/build
         run: |
