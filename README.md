@@ -45,7 +45,7 @@ sigstore verify github --cert-identity https://github.com/mayaCostantini/pyconfr
 OK: checksums-1676301410.txt
 ```
 
-The `--offline` flag can be passed to the command to verify the signature without connecting to the Rekor instance in which the signature entry was stored with Sigstore bundle file (`checksums-*.sigstore` file).
+The `--offline` flag can be passed to the command to verify the signature without connecting to the Rekor instance in which the signature entry was stored with a Sigstore bundle file (`checksums-*.sigstore` file).
 
 See the [`sigstore-python`](https://github.com/sigstore/sigstore-python) documentation for more information on all the arguments available.
 
